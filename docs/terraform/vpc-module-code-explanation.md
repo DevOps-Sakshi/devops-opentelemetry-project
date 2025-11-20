@@ -3,7 +3,7 @@
 This module creates a VPC, subnets, Internet Gateway, NAT gateways, and route tables for deploying EKS or other AWS workloads.
 
 ## 1. Creating the VPC
-'''hcl
+```hcl
 
     resource "aws_vpc" "main" {
       cidr_block           = var.vpc_cidr
