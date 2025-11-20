@@ -7,7 +7,7 @@ While running the microservices using:
 
 `failed to prepare extraction snapshot ... no space left on device`
 
--This means the EC2 instance ran out of disk storage, preventing Docker from pulling more images or creating layer snapshots.
+- This means the EC2 instance ran out of disk storage, preventing Docker from pulling more images or creating layer snapshots.
 
 ## Root Cause
 - The default EC2 volume size (8GB) was too small for all the microservices and images used in the project. As the Docker images downloaded, the root volume filled up completely, causing the snapshot creation to fail.
