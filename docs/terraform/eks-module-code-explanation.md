@@ -1,5 +1,6 @@
-EKS Module – Code Explanation
-1. Creating IAM Role for EKS Cluster
+# EKS Module – Code Explanation
+## 1. Creating IAM Role for EKS Cluster
+```hcl
 resource "aws_iam_role" "cluster" {
   name = "${var.cluster_name}-cluster-role"
 
@@ -14,24 +15,22 @@ resource "aws_iam_role" "cluster" {
     }]
   })
 }
+```
+- Creates an IAM role for the EKS cluster itself.
+- Allows Amazon EKS to assume this role to manage cluster operations.
 
-
-Creates an IAM role for the EKS cluster itself.
-
-Allows Amazon EKS to assume this role to manage cluster operations.
-
-2. Attaching IAM Policy to Cluster Role
+## 2. Attaching IAM Policy to Cluster Role
+```hcl
 resource "aws_iam_role_policy_attachment" "cluster_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role       = aws_iam_role.cluster.name
 }
+```
+- Attaches the AmazonEKSClusterPolicy to the cluster role.
+- Grants necessary permissions for EKS to create and manage resources within AWS.
 
-
-Attaches the AmazonEKSClusterPolicy to the cluster role.
-
-Grants necessary permissions for EKS to create and manage resources within AWS.
-
-3. Creating the EKS Cluster
+## 3. Creating the EKS Cluster
+```hcl
 resource "aws_eks_cluster" "main" {
   name     = var.cluster_name
   version  = var.cluster_version
@@ -45,21 +44,16 @@ resource "aws_eks_cluster" "main" {
     aws_iam_role_policy_attachment.cluster_policy
   ]
 }
+```
+- Deploys the EKS cluster with the specified:
+- cluster_name (from variables)
+- cluster_version (Kubernetes version)
+- role_arn (IAM role for the cluster)
+- Associates the cluster with VPC subnets for networking.
+- depends_on ensures the IAM policy is attached before cluster creation.
 
-
-Deploys the EKS cluster with the specified:
-
-cluster_name (from variables)
-
-cluster_version (Kubernetes version)
-
-role_arn (IAM role for the cluster)
-
-Associates the cluster with VPC subnets for networking.
-
-depends_on ensures the IAM policy is attached before cluster creation.
-
-4. Creating IAM Role for Node Group
+## 4. Creating IAM Role for Node Group
+```hcl
 resource "aws_iam_role" "node" {
   name = "${var.cluster_name}-node-role"
 
@@ -74,13 +68,12 @@ resource "aws_iam_role" "node" {
     }]
   })
 }
+```
+- Creates an IAM role for EKS worker nodes.
+- Allows EC2 instances to assume this role.
 
-
-Creates an IAM role for EKS worker nodes.
-
-Allows EC2 instances to assume this role.
-
-5. Attaching IAM Policies to Node Role
+## 5. Attaching IAM Policies to Node Role
+```hcl
 resource "aws_iam_role_policy_attachment" "node_policy" {
   for_each = toset([
     "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
@@ -91,17 +84,14 @@ resource "aws_iam_role_policy_attachment" "node_policy" {
   policy_arn = each.value
   role       = aws_iam_role.node.name
 }
+```
+- Attaches three AWS managed policies to the worker node role:
+- AmazonEKSWorkerNodePolicy – Allows nodes to join the EKS cluster.
+- AmazonEKS_CNI_Policy – Ensures container networking works correctly.
+- AmazonEC2ContainerRegistryReadOnly – Grants read access to pull container images from ECR.
 
-
-Attaches three AWS managed policies to the worker node role:
-
-AmazonEKSWorkerNodePolicy – Allows nodes to join the EKS cluster.
-
-AmazonEKS_CNI_Policy – Ensures container networking works correctly.
-
-AmazonEC2ContainerRegistryReadOnly – Grants read access to pull container images from ECR.
-
-6. Creating EKS Node Group
+## 6. Creating EKS Node Group
+```hcl
 resource "aws_eks_node_group" "main" {
   for_each = var.node_groups
 
@@ -123,16 +113,10 @@ resource "aws_eks_node_group" "main" {
     aws_iam_role_policy_attachment.node_policy
   ]
 }
-
-
-Creates EKS worker nodes within the cluster.
-
-Uses the node IAM role for permissions.
-
-Assigns nodes to the specified subnets.
-
-Configurable instance types and capacity type (On-Demand or Spot).
-
-Auto-scaling is configured with desired_size, min_size, and max_size.
-
-depends_on ensures IAM policies are applied before node creation.
+```
+- Creates EKS worker nodes within the cluster.
+- Uses the node IAM role for permissions.
+- Assigns nodes to the specified subnets.
+- Configurable instance types and capacity type (On-Demand or Spot).
+- Auto-scaling is configured with desired_size, min_size, and max_size.
+- depends_on ensures IAM policies are applied before node creation.
