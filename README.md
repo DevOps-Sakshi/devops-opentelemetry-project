@@ -62,15 +62,15 @@ Processes recommendations based on product data.
 ## Docker Instructions
 - Build Images
 ```
-docker build -t sakshi1729/ad-service:v1
-docker build -t sakshi1729/product-catalog:v1
-docker build -t sakshi1729/recommendtion-service:v1
+docker build -t username/ad-service:v1
+docker build -t username/product-catalog:v1
+docker build -t username/recommendtion-service:v1
 ```
 - Run Containers 
 ```
-docker run sakshi1729/ad-service:v1
-docker run sakshi1729/product-catalog:v1
-docker run sakshi1729/recommendtion-service:v1
+docker run username/ad-service:v1
+docker run username/product-catalog:v1
+docker run username/recommendtion-service:v1
 ```
 <p float="left">
   <img src="images/ad.png" width="350" />
