@@ -3,9 +3,9 @@
 This module creates a VPC, subnets, Internet Gateway, NAT gateways, and route tables for deploying EKS or other AWS workloads.
 
 ## 1. Creating the VPC
-```hcl
 
-    resource "aws_vpc" "main" {
+
+    ```resource "aws_vpc" "main" {
       cidr_block           = var.vpc_cidr
       enable_dns_hostnames = true
       enable_dns_support   = true
@@ -14,7 +14,7 @@ This module creates a VPC, subnets, Internet Gateway, NAT gateways, and route ta
         Name = "${var.cluster_name}-vpc"
         "kubernetes.io/cluster/${var.cluster_name}" = "shared"
         }
-    }
+    }```
 
 - Creates a VPC with the CIDR block specified in vpc_cidr.
 - Enables DNS hostnames and DNS support for Kubernetes and other services.
