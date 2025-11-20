@@ -24,10 +24,10 @@ resource "aws_s3_bucket" "terraform_state" {
 ```
 - Creates an S3 bucket to store Terraform state files.
 - Bucket name: demo-terraform-eks-state-bucket.
-Lifecycle block:
+- Lifecycle block:
 - prevent_destroy = false allows the bucket to be destroyed if needed (default is safe to destroy).
 - Purpose: Centralized and durable storage for Terraform state.
-Benefits:
+- Benefits:
 - Multiple team members can work on the same infrastructure.
 - Keeps state safe from local machine loss.
 
@@ -49,6 +49,6 @@ resource "aws_dynamodb_table" "terraform_locks" {
 - Billing mode: PAY_PER_REQUEST → you pay only for what you use.
 - Hash key: LockID is the primary key for locking entries.
 - Purpose: Prevents concurrent Terraform operations on the same state file.
-Benefits:
+- Benefits:
 - Avoids race conditions or conflicts in multi-user setups.
 - Ensures safe, atomic Terraform runs.
