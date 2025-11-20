@@ -73,10 +73,10 @@ docker run sakshi1729/product-catalog:v1
 docker run sakshi1729/recommendtion-service:v1
 ```
 <p float="left">
-  <img src="images\ad.png" width="350" />
-  <img src="images\product-catalog.png" width="350" />
-  <img src="images\recommendation.png" width="350" />
-  <img src="images\space issue.png" width="350" />
+  <img src="images/ad.png" width="350" />
+  <img src="images/product-catalog.png" width="350" />
+  <img src="images/recommendation.png" width="350" />
+  <img src="images/space issue.png" width="350" />
 </p>
 
 ## Terraform Infrastructure
