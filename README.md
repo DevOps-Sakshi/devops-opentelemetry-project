@@ -54,7 +54,7 @@ Returns mock products and handles product endpoints.
 
 ### 3.Recommendation Service
 Processes recommendations based on product data.
-Each microservice contains:
+- Each microservice contains:
 - Its own Dockerfile
 - Can be built and run independently
 - Designed to later deploy on Kubernetes (EKS)
@@ -96,13 +96,13 @@ The Terraform folder manages AWS infrastructure in three layers:
 - Cluster authentication
 
 ## Terraform Commands
-### Initialize
+##### Initialize
 `terraform init`
-### Preview
+##### Preview
 `terraform plan`
-### Deploy
+##### Deploy
 `terraform apply`
-### Destroy
+##### Destroy
 `terraform destroy`
 
 ## Tools & Technologies Used
