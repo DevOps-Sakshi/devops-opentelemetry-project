@@ -72,6 +72,12 @@ docker run sakshi1729/ad-service:v1
 docker run sakshi1729/product-catalog:v1
 docker run sakshi1729/recommendtion-service:v1
 ```
+<p float="left">
+  <img src="C:\Users\saksh\OneDrive\Documents\ad.png" width="350" />
+  <img src="C:\Users\saksh\OneDrive\Documents\product-catalog.png" width="350" />
+  <img src="C:\Users\saksh\OneDrive\Documents\recommendation.png" width="350" />
+</p>
+
 ## Terraform Infrastructure
 The Terraform folder manages AWS infrastructure in three layers:
 
