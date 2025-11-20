@@ -14,14 +14,13 @@ This module creates a VPC, subnets, Internet Gateway, NAT gateways, and route ta
         "kubernetes.io/cluster/${var.cluster_name}" = "shared"
         }
     }
-    
 ```
-
 - Creates a VPC with the CIDR block specified in vpc_cidr.
 - Enables DNS hostnames and DNS support for Kubernetes and other services.
 - Tags the VPC with a name and Kubernetes cluster reference.
 
 ## 2. Creating Private Subnets
+```
 resource "aws_subnet" "private" {
   count             = length(var.private_subnet_cidrs)
   vpc_id            = aws_vpc.main.id
@@ -34,6 +33,7 @@ resource "aws_subnet" "private" {
     "kubernetes.io/role/internal-elb"          = "1"
   }
 }
+```
 
 - Creates private subnets based on private_subnet_cidrs.
 - Places subnets in specified availability zones.
