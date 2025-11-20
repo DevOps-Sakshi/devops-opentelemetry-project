@@ -3,7 +3,7 @@
 This module creates a VPC, subnets, Internet Gateway, NAT gateways, and route tables for deploying EKS or other AWS workloads.
 
 ## 1. Creating the VPC
-`resource "aws_vpc" "main" {
+```hcl resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
   enable_dns_support   = true
@@ -12,14 +12,14 @@ This module creates a VPC, subnets, Internet Gateway, NAT gateways, and route ta
     Name = "${var.cluster_name}-vpc"
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
-}`
+}```
 
 - Creates a VPC with the CIDR block specified in vpc_cidr.
 - Enables DNS hostnames and DNS support for Kubernetes and other services.
 - Tags the VPC with a name and Kubernetes cluster reference.
 
 ## 2. Creating Private Subnets
-`resource "aws_subnet" "private" {
+```resource "aws_subnet" "private" {
   count             = length(var.private_subnet_cidrs)
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.private_subnet_cidrs[count.index]
@@ -30,14 +30,14 @@ This module creates a VPC, subnets, Internet Gateway, NAT gateways, and route ta
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"          = "1"
   }
-}`
+}```
 
 - Creates private subnets based on private_subnet_cidrs.
 - Places subnets in specified availability zones.
 - Tags subnets for Kubernetes internal use (internal-elb).
 
 ## 3. Creating Public Subnets
-`resource "aws_subnet" "public" {
+```resource "aws_subnet" "public" {
   count             = length(var.public_subnet_cidrs)
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.public_subnet_cidrs[count.index]
@@ -51,7 +51,7 @@ This module creates a VPC, subnets, Internet Gateway, NAT gateways, and route ta
     "kubernetes.io/role/internal-elb"          = "1"
   }
 }
-`
+
 - Creates public subnets for internet-facing resources.
 - Automatically assigns public IPs to instances.
 - Tags subnets for Kubernetes and external load balancer usage.
